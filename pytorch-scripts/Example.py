@@ -23,7 +23,7 @@ import Models
 parser = argparse.ArgumentParser(description='CS7-GV1 Final Project');
 
 
-
+#add/remove arguments as required. It is useful when tuning hyperparameters from bash scripts
 parser.add_argument('--aug', type=str, default = 'SCALE_H_FLIP', help='data augmentation strategy')
 parser.add_argument('--datapath', type=str, default='', 
                help='root folder for data.It contains two sub-directories train and val')
@@ -54,7 +54,7 @@ data_dir = args.datapath;
 dsets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transforms[x])
              for x in ['train', 'val']}
 dset_loaders = {x: torch.utils.data.DataLoader(dsets[x], batch_size=args.batch_size,
-                                               shuffle=True, num_workers=8)
+                                               shuffle=True, num_workers=8) # set num_workers higher for more cores and faster data loading
              for x in ['train', 'val']}
                  
 dset_sizes = {x: len(dsets[x]) for x in ['train', 'val']}
@@ -65,7 +65,7 @@ dset_classes = dsets['train'].classes
 use_gpu = args.cuda;
 ##
 
-#Load model
+#Load model . Once you define your own model in Models.py, you can call it from here. 
 if args.model == "ResNet18":
     current_model = Models.resnet18(args.pretrained)
     num_ftrs = current_model.fc.in_features
@@ -81,9 +81,15 @@ else :
 if use_gpu:
     current_model = current_model.cuda();
     
-
+# uses a cross entropy loss as the loss function
+# http://pytorch.org/docs/master/nn.html#
 criterion = nn.CrossEntropyLoss()
+
+#uses stochastic gradient descent for learning
+# http://pytorch.org/docs/master/optim.html
 optimizer_ft = optim.SGD(current_model.parameters(), lr=args.lr, momentum=0.9)
+
+#the learning rate condition. The ReduceLROnPlateau class reduces the learning rate by 'factor' after 'patience' epochs.
 scheduler_ft = ReduceLROnPlateau(optimizer_ft, 'min', factor = 0.5,patience = 3, verbose = True)
 
 
