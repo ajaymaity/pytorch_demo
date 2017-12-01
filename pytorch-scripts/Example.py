@@ -24,7 +24,7 @@ parser = argparse.ArgumentParser(description='CS7-GV1 Final Project');
 
 
 #add/remove arguments as required. It is useful when tuning hyperparameters from bash scripts
-parser.add_argument('--aug', type=str, default = 'SCALE_H_FLIP', help='data augmentation strategy')
+parser.add_argument('--aug', type=str, default = '', help='data augmentation strategy')
 parser.add_argument('--datapath', type=str, default='', 
                help='root folder for data.It contains two sub-directories train and val')
 parser.add_argument('--cuda', action='store_true',

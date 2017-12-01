@@ -8,7 +8,7 @@ You can download the data from the following links
 * [Training images](http://cs231n.stanford.edu/tiny-imagenet-200.zip)
 * Testing images (to be updated soon)
 
-### Prerequisites
+## Prerequisites
 
 ```
 Ubuntu (14 or higher)
@@ -18,10 +18,20 @@ python-pip
 virtualenv (optional)
 docker (optional) 
 ```
-### Installing 
+## Installation
 
-####
+### Step 1 : Installing Cuda
+Download CUDA 8 and Cudnn library from the following links. The default website takes one to CUDA 9. The previous versions can be found in "Legacy Releases" under "Additional Resources".
+* [Cuda 8](https://developer.nvidia.com/cuda-80-ga2-download-archive)
+* [Cudnn 7 for cuda 8](https://drive.google.com/a/tcd.ie/file/d/1JNKUnIRbAnZ49wSiJgou4zz9CQiamR8J/view?usp=sharing)
+For CUDA, follow the installation instructions from the website. For Cudnn, they ask you to create an account to be able to download the library. You don't have to since we have downloaded it already for you. You can just follow the installation intrctions mentioned here
+### Step 2 : Creating a virtual environment
+### Step 3 : Installing pytorch
+### Step 4 : Installing dependencies
 
+### using a docker container
+
+## Running the script
 Say what the step will be
 
 ```
