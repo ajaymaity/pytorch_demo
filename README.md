@@ -13,7 +13,7 @@ You can download the data from the following links
 ```
 Ubuntu (14 or higher)
 Cuda 8
-cuDNN
+cuDNN (optionally used to accelerate training)
 python-pip
 virtualenv (optional)
 ```
@@ -35,6 +35,7 @@ source project_name/bin/activate
 ```
 "/path/to/python2.7" is usually /usr/bin/python2.7. 
 Once you activate a virtual environment, you will be able to use only the local packages. Check this link if you wish to know how to use the global packages. 
+
 [Make virtualenv inherit specific packages from your global site-packages
 ](https://stackoverflow.com/questions/12079607/make-virtualenv-inherit-specific-packages-from-your-global-site-packages)
 ### Step 3 : Installing pytorch
@@ -61,6 +62,8 @@ python Example.py --cuda --pretrained  --datapath /path/to/data/ --model ResNet1
 ```
 
 Please note the augmentation strategy used is different. ResNet18 has a very deep architecture and the feature map size becomes zero at a certain layer for an input size of 64\*64. Hence we resize the input to 224\*224. 
+
+Please check the code for additional parameters.
 
 ## Testing the model
 

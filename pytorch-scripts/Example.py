@@ -6,6 +6,7 @@ import os
 import argparse
 import time
 import copy
+import numpy as np
 
 #pytorch modules
 import torch
@@ -14,12 +15,12 @@ from torchvision import datasets
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 import torch.optim as optim
 from torch.autograd import Variable
-
+import pdb
 
 #user defined modules
 import Augmentation as ag
 import Models
-
+from Test import Test
 parser = argparse.ArgumentParser(description='CS7-GV1 Final Project');
 
 
@@ -38,7 +39,12 @@ parser.add_argument('--lr', type=float, default=0.001,
                     help='initial learning rate')
 parser.add_argument('--epochs', type=int, default=25,
                     help='upper epoch limit')
+parser.add_argument('--tag', type=str, default=None,
+                    help='unique_identifier used to save results')
 args = parser.parse_args();
+if not args.tag:
+    print('Please specify tag...')
+    exit()
 print (args)
 
 #Define augmentation strategy
@@ -54,7 +60,7 @@ data_dir = args.datapath;
 dsets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transforms[x])
              for x in ['train', 'val']}
 dset_loaders = {x: torch.utils.data.DataLoader(dsets[x], batch_size=args.batch_size,
-                                               shuffle=True, num_workers=8) # set num_workers higher for more cores and faster data loading
+                                               shuffle=True, num_workers=16) # set num_workers higher for more cores and faster data loading
              for x in ['train', 'val']}
                  
 dset_sizes = {x: len(dsets[x]) for x in ['train', 'val']}
@@ -166,5 +172,18 @@ def train_model(model, criterion, optimizer, lr_scheduler, num_epochs=25):
     print('Best val Acc: {:4f}'.format(best_acc))
     return best_model
 
+
+#comment the block below if you are not training 
+######################
 trained_model = train_model(current_model, criterion, optimizer_ft, scheduler_ft,
                       num_epochs=args.epochs);
+with open(args.tag+'.model', 'wb') as f:
+    torch.save(trained_model, f);
+######################    
+## uncomment the lines blow while testing.
+'''trained_model = torch.load(args.tag+'.model');
+testDataPath = '/path/to/test/data/root/folder'
+t = Test(args.aug,trained_model);
+scores = t.testfromdir(testDataPath);
+#pdb.set_trace();
+np.savetxt(args.tag+'.txt', scores, fmt='%0.5f',delimiter=',')'''
