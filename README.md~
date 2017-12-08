@@ -13,7 +13,7 @@ You can download the data from the following links
 ```
 Ubuntu (14 or higher)
 Cuda 8
-cuDNN
+cuDNN (optionally used to accelerate training)
 python-pip
 virtualenv (optional)
 ```
@@ -67,6 +67,9 @@ Please check the code for additional parameters.
 
 ## Testing the model
 
-To be updated soon
+Check out the commented section of Example.py, at the very end. The data needs to be in the following order for pytorch specifications
+```
+root_folder/val/test_images/*.jpg
 
-
+```
+The code works for any number of images in the folder

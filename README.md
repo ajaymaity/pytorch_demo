@@ -67,6 +67,9 @@ Please check the code for additional parameters.
 
 ## Testing the model
 
-To be updated soon
+Check out the commented section of Example.py, at the very end. The data needs to be in the following order for pytorch specifications
+```
+root_folder/val/test_images/*.jpg
 
-
+```
+The code works for any number of images in the folder. Check the kaggle competition page for downloading the test data.
